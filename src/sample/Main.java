@@ -9,19 +9,44 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
-
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class Main extends Application {
 
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+    class buttonActionHandler implements EventHandler<ActionEvent> {
 
+        private final int number ;
+
+        buttonActionHandler(int number) {
+            this.number = number ;
+        }
+        @Override
+        public void handle(ActionEvent event) {
+            System.out.println("Event " + number);
+            Button temp_button = ((Button)event.getSource());
+            if( temp_button.getText() == "" ){
+            String mark = player.get(starter);
+            System.out.printf(mark);
+            temp_button.setText(mark);
+            starter = !starter;
+            round_counter++;
+//
+//            //TODO: Win check from here
+            }
+        }
+
+
+    }
+
+    Map<Boolean, String> player= new HashMap<>();
         //set the players
         Player playerX = new Player("Player", 0);
         Player playerO = new Player("Player", 0);
@@ -43,70 +68,54 @@ public class Main extends Application {
         }
         Tie tie = new Tie(0);
 
-        // create buttons
-        Button button = new Button();
-        Button button2 = new Button();
-        Button button3 = new Button();
-        Button button4 = new Button();
-        Button button5 = new Button();
-        Button button6 = new Button();
-        Button button7 = new Button();
-        Button button8 = new Button();
-        Button button9 = new Button();
+    private boolean starter = firstPlayer();
+    private int round_counter;
 
+    private Button createGridButton(int number) {
+        Button button = createButton(Integer.toString(number));
+        button.setOnAction(new buttonActionHandler(number));
+        return button ;
+    }
+
+    private Button createButton(String number) {
+        Button button = new Button();
         // set (CSS) id for element
-        button.setId("b1");
+        button.setId(number);
 
         button.setPrefWidth(100);
         button.setPrefHeight(100);
+        return button ;
+    }
 
-        button2.setPrefWidth(100);
-        button2.setPrefHeight(100);
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        round_counter = 1;
 
-        button3.setPrefWidth(100);
-        button3.setPrefHeight(100);
+        player.put(true, "X");
+        player.put(false, "O");
 
-        button4.setPrefWidth(100);
-        button4.setPrefHeight(100);
+        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
-        button5.setPrefWidth(100);
-        button5.setPrefHeight(100);
-
-        button6.setPrefWidth(100);
-        button6.setPrefHeight(100);
-
-        button7.setPrefWidth(100);
-        button7.setPrefHeight(100);
-
-        button8.setPrefWidth(100);
-        button8.setPrefHeight(100);
-
-        button9.setPrefWidth(100);
-        button9.setPrefHeight(100);
-
-        // set button action
-        /*
-        List P1Win = new ArrayList<>();
-
-        button.setOnAction(e -> {
-            button.setText("O");
-            P1Win.add(0);
-        });
-        */
 
         GridPane rootBoard = new GridPane();
         rootBoard.setMinSize(300,324);
 
         GridPane gameBoard = new GridPane();
-        gameBoard.add(button, 1, 1);
-        gameBoard.add(button2, 2, 1);
-        gameBoard.add(button3, 3, 1);
-        gameBoard.add(button4, 1, 2);
-        gameBoard.add(button5, 2, 2);
-        gameBoard.add(button6, 3, 2);
-        gameBoard.add(button7, 1, 3);
-        gameBoard.add(button8, 2, 3);
-        gameBoard.add(button9, 3, 3);
+        // CREATE BUTTON
+        for (int n = 1; n<10; n++) {
+            Button button = createGridButton(n);
+            int row = (n-1) / 3;
+            int col = (n-1) % 3;
+            gameBoard.add(button, col, row);
+        }
+
+        // set (CSS) id for element
+
+
+        // set button action
+//        List P1Win = new ArrayList<>();
+
+//        button.setOnAction(new buttonHandler(number));
         gameBoard.setMinSize(300,300);
 
         GridPane gameScore = new GridPane();
@@ -146,11 +155,15 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
     public static void main(String[] args) {
 
         launch(args);
 
 
     }
+
+    public static boolean firstPlayer() {
+        return Math.random() < 0.5;
+    }
 }
+
