@@ -47,26 +47,7 @@ public class Main extends Application {
     }
 
     Map<Boolean, String> player= new HashMap<>();
-        //set the players
-        Player playerX = new Player("Player", 0);
-        Player playerO = new Player("Player", 0);
-        TextInputDialog playerXInput = new TextInputDialog("Name...");
-        playerXInput.setTitle("Player X name");
-        playerXInput.setHeaderText("Player X, type your name!");
-        playerXInput.setContentText("Name:");
-        Optional<String> inputX = playerXInput.showAndWait();
-        if (inputX.isPresent()) {
-            playerX.setPlayerName(inputX.get());
-        }
-        TextInputDialog playerOInput = new TextInputDialog("Name...");
-        playerOInput.setTitle("Player O name");
-        playerOInput.setHeaderText("Player O, type your name!");
-        playerOInput.setContentText("Name:");
-        Optional<String> inputO = playerOInput.showAndWait();
-        if (inputO.isPresent()) {
-            playerO.setPlayerName(inputO.get());
-        }
-        Tie tie = new Tie(0);
+
 
     private boolean starter = firstPlayer();
     private int round_counter;
@@ -89,6 +70,28 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+        //set the players
+        Player playerX = new Player("Player", 0);
+        Player playerO = new Player("Player", 0);
+        TextInputDialog playerXInput = new TextInputDialog("Name...");
+        playerXInput.setTitle("Player X name");
+        playerXInput.setHeaderText("Player X, type your name!");
+        playerXInput.setContentText("Name:");
+        Optional<String> inputX = playerXInput.showAndWait();
+        if (inputX.isPresent()) {
+            playerX.setPlayerName(inputX.get());
+        }
+        TextInputDialog playerOInput = new TextInputDialog("Name...");
+        playerOInput.setTitle("Player O name");
+        playerOInput.setHeaderText("Player O, type your name!");
+        playerOInput.setContentText("Name:");
+        Optional<String> inputO = playerOInput.showAndWait();
+        if (inputO.isPresent()) {
+            playerO.setPlayerName(inputO.get());
+        }
+        Tie tie = new Tie(0);
+
         round_counter = 1;
 
         player.put(true, "X");
