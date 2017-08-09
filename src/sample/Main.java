@@ -7,12 +7,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
 
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Main extends Application {
 
@@ -20,6 +22,28 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
+        //set the players
+        Player playerX = new Player("Player", 0);
+        Player playerO = new Player("Player", 0);
+        TextInputDialog playerXInput = new TextInputDialog("Name...");
+        playerXInput.setTitle("Player X name");
+        playerXInput.setHeaderText("Player X, type your name!");
+        playerXInput.setContentText("Name:");
+        Optional<String> inputX = playerXInput.showAndWait();
+        if (inputX.isPresent()) {
+            playerX.setPlayerName(inputX.get());
+        }
+        TextInputDialog playerOInput = new TextInputDialog("Name...");
+        playerOInput.setTitle("Player O name");
+        playerOInput.setHeaderText("Player O, type your name!");
+        playerOInput.setContentText("Name:");
+        Optional<String> inputO = playerOInput.showAndWait();
+        if (inputO.isPresent()) {
+            playerO.setPlayerName(inputO.get());
+        }
+        Tie tie = new Tie(0);
+
+        // create buttons
         Button button = new Button();
         Button button2 = new Button();
         Button button3 = new Button();
@@ -88,20 +112,25 @@ public class Main extends Application {
         GridPane gameScore = new GridPane();
         gameScore.setMinSize(300, 24);
 
+
+        String playerXName = playerX.getPlayerName();
+        System.out.println(playerXName);
+        int playerXScore = playerX.getPlayerScore();
+
         Label player1Label = new Label();
         player1Label.setMinSize(100, 24);
         player1Label.setAlignment(Pos.CENTER);
-        player1Label.setText("Player X:");
+        player1Label.setText(playerXName+" X: "+playerXScore);
 
         Label player2Label = new Label();
         player2Label.setMinSize(100, 24);
         player2Label.setAlignment(Pos.CENTER);
-        player2Label.setText("Player O:");
+        player2Label.setText(playerO.getPlayerName() +" O: " + playerO.getPlayerScore());
 
         Label tieLabel = new Label();
         tieLabel.setMinSize(100, 24);
         tieLabel.setAlignment(Pos.CENTER);
-        tieLabel.setText("Tie:");
+        tieLabel.setText("Tie: "+ tie.getTieScore());
 
 
         gameScore.add(player1Label, 1, 1);
@@ -120,6 +149,9 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+
         launch(args);
+
+
     }
 }
