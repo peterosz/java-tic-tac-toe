@@ -114,7 +114,6 @@ public class Main extends Application {
 
 
         String playerXName = playerX.getPlayerName();
-        System.out.println(playerXName);
         int playerXScore = playerX.getPlayerScore();
 
         Label player1Label = new Label();
