@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.deploy.util.BlackList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -35,17 +36,26 @@ public class Main extends Application {
         private final int number ;
 
         buttonActionHandler(int number) {
-            this.number = number ;
+            this.number = number;
         }
-        @Override
 
+        @Override
         public void handle(ActionEvent event) {
             Button temp_button = ((Button)event.getSource());
             if( temp_button.getText() == "" ){
+                if (starter == false) {
+                    player1Label.setStyle("-fx-background-color: #77ff85;");
+                    player2Label.setStyle("-fx-background-color: transparent;");
+                    temp_button.setStyle("-fx-text-fill: blue;");
+                } else {
+                    player2Label.setStyle("-fx-background-color: #77ff85;");
+                    player1Label.setStyle("-fx-background-color: transparent;");
+                }
                 String mark = player.get(starter);
                 temp_button.setText(mark);
                 starter = !starter;
                 gameState[number - 1] = mark;
+
 //
 //          //TODO: Win check from here
                 if (round_counter >= 5) {
@@ -59,7 +69,7 @@ public class Main extends Application {
                         } else {
                             name = playerO.getPlayerName();
                             playerO.setPlayerScore(playerO.getPlayerScore() + 1);
-                            player2Label.setText(name +" X: "+ playerO.getPlayerScore());
+                            player2Label.setText(name +" O: "+ playerO.getPlayerScore());
                         }
                         alertGameOver(win, name);
                     } else if (round_counter == 9) {
@@ -101,9 +111,6 @@ public class Main extends Application {
     private boolean starter = firstPlayer();
     private int round_counter;
 
-
-
-
     @Override
     public void start(Stage primaryStage) throws Exception{
 
@@ -116,6 +123,7 @@ public class Main extends Application {
         if (inputX.isPresent()) {
             playerX.setPlayerName(inputX.get());
         }
+
         TextInputDialog playerOInput = new TextInputDialog("Name...");
         playerOInput.setTitle("Player O name");
         playerOInput.setHeaderText("Player O, type your name!");
@@ -166,15 +174,31 @@ public class Main extends Application {
 
 
         String playerXName = playerX.getPlayerName();
+        if (7 < playerXName.length()) {
+            playerXName = playerXName.substring(0, 7);
+        }
         int playerXScore = playerX.getPlayerScore();
 
         player1Label.setMinSize(100, 24);
         player1Label.setAlignment(Pos.CENTER);
         player1Label.setText(playerXName+" X: "+playerXScore);
 
+
+        String playerOName = playerO.getPlayerName();
+        if (7 < playerOName.length()) {
+            playerOName = playerXName.substring(0, 7);
+        }
+        int playerOScore = playerX.getPlayerScore();
+
         player2Label.setMinSize(100, 24);
         player2Label.setAlignment(Pos.CENTER);
-        player2Label.setText(playerO.getPlayerName() +" O: " + playerO.getPlayerScore());
+        player2Label.setText(playerOName+" O: "+playerOScore);
+
+        if (starter == true) {
+            player1Label.setStyle("-fx-background-color: #77ff85;");
+        } else {
+            player2Label.setStyle("-fx-background-color: #77ff85;");
+        }
 
         tieLabel.setMinSize(100, 24);
         tieLabel.setAlignment(Pos.CENTER);
