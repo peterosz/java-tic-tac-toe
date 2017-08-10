@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.deploy.util.BlackList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -36,20 +37,29 @@ public class Main extends Application {
         private final int number ;
 
         buttonActionHandler(int number) {
-            this.number = number ;
+            this.number = number;
         }
-        @Override
 
+        @Override
         public void handle(ActionEvent event) {
             System.out.println("Event " + number);
             Button temp_button = ((Button)event.getSource());
             if( temp_button.getText() == "" ){
+                if (starter == false) {
+                    player1Label.setStyle("-fx-background-color: #ff7c7c;");
+                    player2Label.setStyle("-fx-background-color: transparent;");
+                } else {
+                    player2Label.setStyle("-fx-background-color: #ff7c7c;");
+                    player1Label.setStyle("-fx-background-color: transparent;");
+                }
                 String mark = player.get(starter);
                 System.out.println("Player: " + mark);
                 temp_button.setText(mark);
                 starter = !starter;
+                System.out.println(starter);
                 System.out.println("Round " + round_counter);
                 gameState[number - 1] = mark;
+
 //
 //          //TODO: Win check from here
                 if (round_counter >= 5) {
@@ -95,6 +105,7 @@ public class Main extends Application {
 
     private boolean starter = firstPlayer();
     private int round_counter;
+
 
     private Button createGridButton(int number) {
         Button button = createButton(Integer.toString(number));
@@ -192,6 +203,12 @@ public class Main extends Application {
         player2Label.setMinSize(100, 24);
         player2Label.setAlignment(Pos.CENTER);
         player2Label.setText(playerO.getPlayerName() +" O: " + playerO.getPlayerScore());
+
+        if (starter == true) {
+            player1Label.setStyle("-fx-background-color: #ff7c7c;");
+        } else {
+            player2Label.setStyle("-fx-background-color: #ff7c7c;");
+        }
 
         tieLabel.setMinSize(100, 24);
         tieLabel.setAlignment(Pos.CENTER);
