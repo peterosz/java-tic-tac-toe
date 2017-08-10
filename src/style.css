@@ -1,5 +1,44 @@
-#b1 {
-    -fx-text-fill: red;
-    -fx-font-size: 40;
+Button {
+    -fx-font-size:90;
+    -fx-background-color: transparent;
+}
 
+#1 {
+    -fx-border-color: Black;
+    -fx-border-width: 3 3 3 0;
+}
+
+#2 {
+    -fx-border-color: Black;
+    -fx-border-width: 3 0 3 0;
+}
+
+#3 {
+    -fx-border-color: Black;
+    -fx-border-width: 3 0 3 3;
+}
+
+#4 {
+    -fx-border-color: Black;
+    -fx-border-width: 0 3 0 0;
+}
+
+#6 {
+    -fx-border-color: Black;
+    -fx-border-width: 0 0 0 3;
+}
+
+#7 {
+    -fx-border-color: Black;
+    -fx-border-width: 3 3 0 0;
+}
+
+#8 {
+    -fx-border-color: Black;
+    -fx-border-width: 3 0 0 0;
+}
+
+#9 {
+    -fx-border-color: Black;
+    -fx-border-width: 3 0 0 3;
 }
