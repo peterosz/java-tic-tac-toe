@@ -46,10 +46,11 @@ public class Main extends Application {
             Button temp_button = ((Button)event.getSource());
             if( temp_button.getText() == "" ){
                 if (starter == false) {
-                    player1Label.setStyle("-fx-background-color: #ff7c7c;");
+                    player1Label.setStyle("-fx-background-color: #77ff85;");
                     player2Label.setStyle("-fx-background-color: transparent;");
+                    temp_button.setStyle("-fx-text-fill: blue;");
                 } else {
-                    player2Label.setStyle("-fx-background-color: #ff7c7c;");
+                    player2Label.setStyle("-fx-background-color: #77ff85;");
                     player1Label.setStyle("-fx-background-color: transparent;");
                 }
                 String mark = player.get(starter);
@@ -207,18 +208,18 @@ public class Main extends Application {
 
         String playerOName = playerO.getPlayerName();
         if (7 < playerOName.length()) {
-            playerOName = playerOName.substring(0, 7);
+            playerOName = playerXName.substring(0, 7);
         }
-        int playerOScore = playerO.getPlayerScore();
-        
+        int playerOScore = playerX.getPlayerScore();
+
         player2Label.setMinSize(100, 24);
         player2Label.setAlignment(Pos.CENTER);
-        player2Label.setText(playerOName +" O: " + playerOScore);
+        player2Label.setText(playerOName+" O: "+playerOScore);
 
         if (starter == true) {
-            player1Label.setStyle("-fx-background-color: #ff7c7c;");
+            player1Label.setStyle("-fx-background-color: #77ff85;");
         } else {
-            player2Label.setStyle("-fx-background-color: #ff7c7c;");
+            player2Label.setStyle("-fx-background-color: #77ff85;");
         }
 
         tieLabel.setMinSize(100, 24);
