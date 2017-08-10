@@ -134,6 +134,7 @@ public class Main extends Application {
         if (inputX.isPresent()) {
             playerX.setPlayerName(inputX.get());
         }
+
         TextInputDialog playerOInput = new TextInputDialog("Name...");
         playerOInput.setTitle("Player O name");
         playerOInput.setHeaderText("Player O, type your name!");
@@ -194,15 +195,25 @@ public class Main extends Application {
 
 
         String playerXName = playerX.getPlayerName();
+        if (7 < playerXName.length()) {
+            playerXName = playerXName.substring(0, 7);
+        }
         int playerXScore = playerX.getPlayerScore();
 
         player1Label.setMinSize(100, 24);
         player1Label.setAlignment(Pos.CENTER);
         player1Label.setText(playerXName+" X: "+playerXScore);
 
+
+        String playerOName = playerO.getPlayerName();
+        if (7 < playerOName.length()) {
+            playerOName = playerOName.substring(0, 7);
+        }
+        int playerOScore = playerO.getPlayerScore();
+        
         player2Label.setMinSize(100, 24);
         player2Label.setAlignment(Pos.CENTER);
-        player2Label.setText(playerO.getPlayerName() +" O: " + playerO.getPlayerScore());
+        player2Label.setText(playerOName +" O: " + playerOScore);
 
         if (starter == true) {
             player1Label.setStyle("-fx-background-color: #ff7c7c;");
