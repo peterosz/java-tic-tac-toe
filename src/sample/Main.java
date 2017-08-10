@@ -3,12 +3,10 @@ package sample;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
@@ -30,6 +28,7 @@ public class Main extends Application {
     Label tieLabel = new Label();
     Label player1Label = new Label();
     Label player2Label = new Label();
+    GameBoard gameBoard;
 
     class buttonActionHandler implements EventHandler<ActionEvent> {
 
@@ -41,20 +40,16 @@ public class Main extends Application {
         @Override
 
         public void handle(ActionEvent event) {
-            System.out.println("Event " + number);
             Button temp_button = ((Button)event.getSource());
             if( temp_button.getText() == "" ){
                 String mark = player.get(starter);
-                System.out.println("Player: " + mark);
                 temp_button.setText(mark);
                 starter = !starter;
-                System.out.println("Round " + round_counter);
                 gameState[number - 1] = mark;
 //
 //          //TODO: Win check from here
                 if (round_counter >= 5) {
                     boolean win = checkWin(mark, gameState);
-                    System.out.println("checkwin: " + win);
                     String name = null;
                     if (win) {
                         if (mark.equals("X")) {
@@ -71,6 +66,7 @@ public class Main extends Application {
                         alertGameOver(win, name);
                         tie.setTieScore(tie.getTieScore() + 1);
                         tieLabel.setText("Tie: "+ tie.getTieScore());
+
                     }
                 }
                 round_counter++;
@@ -78,17 +74,26 @@ public class Main extends Application {
         }
     }
 
-    public static void alertGameOver(boolean win, String name) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    public void alertGameOver(boolean win, String name) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Game over!");
         if (win) {
-            alert.setHeaderText("The winner is: ");
-            alert.setContentText(name);
+            alert.setHeaderText("The winner is: "+name);
+            alert.setContentText("Want to play again?");
         } else {
             alert.setHeaderText("It is a tie!");
-            alert.setContentText("Tie!");
+            alert.setContentText("Want to play again?!");
         }
-        alert.showAndWait();
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            for (int i = 0; i< gameState.length; i++){
+                gameState[i] = "-";
+            }
+            gameBoard.resetBoard();
+            round_counter = 0;
+        } else {
+            System.exit(0);
+        }
     }
 
     Map<Boolean, String> player= new HashMap<>();
@@ -96,20 +101,8 @@ public class Main extends Application {
     private boolean starter = firstPlayer();
     private int round_counter;
 
-    private Button createGridButton(int number) {
-        Button button = createButton(Integer.toString(number));
-        button.setOnAction(new buttonActionHandler(number));
-        return button ;
-    }
 
-    private Button createButton(String number) {
-        Button button = new Button();
-        // set (CSS) id for element
-        button.setId(number);
-        button.setPrefWidth(100);
-        button.setPrefHeight(100);
-        return button ;
-    }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -160,23 +153,13 @@ public class Main extends Application {
         GridPane rootBoard = new GridPane();
         rootBoard.setMinSize(300,324);
 
-        GridPane gameBoard = new GridPane();
-        // CREATE BUTTON
-        for (int n = 1; n<10; n++) {
-            Button button = createGridButton(n);
-            int row = (n-1) / 3;
-            int col = (n-1) % 3;
-            gameBoard.add(button, col, row);
+        gameBoard = new GameBoard();
+
+        for (int i = 0; i < 9; i++){
+            gameBoard.gameButtonList.get(i).setOnAction(new buttonActionHandler(i+1));
         }
 
-        // set (CSS) id for element
-
-
-        // set button action
-//        List P1Win = new ArrayList<>();
-
-
-        gameBoard.setMinSize(300,300);
+        gameBoard.gameBoardPane.setMinSize(300,300);
 
         GridPane gameScore = new GridPane();
         gameScore.setMinSize(300, 24);
@@ -207,7 +190,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
 
         rootBoard.add(gameScore, 1, 1);
-        rootBoard.add(gameBoard, 1, 2);
+        rootBoard.add(gameBoard.gameBoardPane, 1, 2);
 
         primaryStage.show();
     }
