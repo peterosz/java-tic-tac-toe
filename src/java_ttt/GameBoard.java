@@ -5,7 +5,7 @@ import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
-public class GameBoard extends Main{
+public class GameBoard {
     public GridPane gameBoardPane;
     public Button GameButton;
     public ArrayList<Button> gameButtonList;
