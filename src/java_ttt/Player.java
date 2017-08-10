@@ -1,4 +1,4 @@
-package sample;
+package java_ttt;
 
 public class Player {
     private String name;
