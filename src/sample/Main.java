@@ -66,11 +66,11 @@ public class Main extends Application {
                         if (mark.equals("X")) {
                             name = playerX.getPlayerName();
                             playerX.setPlayerScore(playerX.getPlayerScore() + 1);
-                            player1Label.setText(name +" X: "+ playerX.getPlayerScore());
+                            player1Label.setText(cutName(name) +" X: "+ playerX.getPlayerScore());
                         } else {
                             name = playerO.getPlayerName();
                             playerO.setPlayerScore(playerO.getPlayerScore() + 1);
-                            player2Label.setText(name +" O: "+ playerO.getPlayerScore());
+                            player2Label.setText(cutName(name) +" O: "+ playerO.getPlayerScore());
                         }
                         alertGameOver(win, name);
                     } else if (round_counter == 9) {
@@ -143,10 +143,10 @@ public class Main extends Application {
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("First player info");
-        String mark = player.get(starter);
-        alert.setHeaderText("The first player is: " + mark);
+        String playersMark = player.get(starter);
+        alert.setHeaderText("The first player is: " + playersMark);
         String firstPlayerName;
-        if (mark == "X") {
+        if (playersMark == "X") {
             firstPlayerName = playerX.getPlayerName();
         } else {
             firstPlayerName = playerO.getPlayerName();
@@ -160,7 +160,7 @@ public class Main extends Application {
 
 
         GridPane rootBoard = new GridPane();
-        rootBoard.setMinSize(300,324);
+        rootBoard.setMinSize(600,624);
 
         gameBoard = new GameBoard();
 
@@ -168,32 +168,28 @@ public class Main extends Application {
             gameBoard.gameButtonList.get(i).setOnAction(new buttonActionHandler(i+1));
         }
 
-        gameBoard.gameBoardPane.setMinSize(300,300);
+        gameBoard.gameBoardPane.setMinSize(600,600);
 
         GridPane gameScore = new GridPane();
-        gameScore.setMinSize(300, 24);
+        gameScore.setMinSize(600, 24);
 
 
         String playerXName = playerX.getPlayerName();
-        if (7 < playerXName.length()) {
-            playerXName = playerXName.substring(0, 7);
-        }
         int playerXScore = playerX.getPlayerScore();
 
-        player1Label.setMinSize(100, 24);
+        player1Label.setText(cutName(playerXName) +" X: "+playerXScore);
+        player1Label.setMinSize(200, 24);
         player1Label.setAlignment(Pos.CENTER);
-        player1Label.setText(playerXName+" X: "+playerXScore);
+
 
 
         String playerOName = playerO.getPlayerName();
-        if (7 < playerOName.length()) {
-            playerOName = playerXName.substring(0, 7);
-        }
-        int playerOScore = playerX.getPlayerScore();
+        int playerOScore = playerO.getPlayerScore();
 
-        player2Label.setMinSize(100, 24);
+        player2Label.setText(cutName(playerOName) +" O: "+playerOScore);
+        player2Label.setMinSize(200, 24);
         player2Label.setAlignment(Pos.CENTER);
-        player2Label.setText(playerOName+" O: "+playerOScore);
+
 
         if (starter == true) {
             player1Label.setStyle("-fx-background-color: #77ff85;");
@@ -201,7 +197,7 @@ public class Main extends Application {
             player2Label.setStyle("-fx-background-color: #77ff85;");
         }
 
-        tieLabel.setMinSize(100, 24);
+        tieLabel.setMinSize(200, 24);
         tieLabel.setAlignment(Pos.CENTER);
         tieLabel.setText("Tie: "+ tie.getTieScore());
 
@@ -210,13 +206,14 @@ public class Main extends Application {
         gameScore.add(player2Label,2, 1);
         gameScore.add(tieLabel,3, 1);
 
-        Scene scene = new Scene(rootBoard, 300, 324);
+        Scene scene = new Scene(rootBoard, 600, 624);
         scene.getStylesheets().add("style.css");
         primaryStage.setScene(scene);
 
         rootBoard.add(gameScore, 1, 1);
         rootBoard.add(gameBoard.gameBoardPane, 1, 2);
 
+        primaryStage.setTitle("Tic-Tac-Toe by UptownFunktion");
         primaryStage.show();
     }
 
@@ -242,6 +239,14 @@ public class Main extends Application {
             }
         }
         return false;
+    }
+
+    private static String cutName(String playerName) {
+        if (10 < playerName.length()) {
+            return playerName.substring(0,10);
+        } else {
+            return playerName;
+        }
     }
 }
 

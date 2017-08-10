@@ -27,8 +27,8 @@ public class GameBoard extends Main{
         Button button = new Button();
         // set (CSS) id for element
         button.setId(number);
-        button.setPrefWidth(100);
-        button.setPrefHeight(100);
+        button.setPrefWidth(200);
+        button.setPrefHeight(200);
         return button;
     }
 
