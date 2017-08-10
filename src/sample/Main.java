@@ -75,7 +75,7 @@ public class Main extends Application {
                         } else {
                             name = playerO.getPlayerName();
                             playerO.setPlayerScore(playerO.getPlayerScore() + 1);
-                            player2Label.setText(name +" X: "+ playerO.getPlayerScore());
+                            player2Label.setText(name +" O: "+ playerO.getPlayerScore());
                         }
                         alertGameOver(win, name);
                     } else if (round_counter == 9) {
