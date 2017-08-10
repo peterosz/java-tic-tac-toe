@@ -1,4 +1,4 @@
-package sample;
+package java_ttt;
 
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -20,13 +20,11 @@ public class GameBoard extends Main{
             int col = (n-1) % 3;
             gameBoardPane.add(button, col, row);
         }
-
     }
 
     private Button createButton(String number) {
         Button button = new Button();
-        // set (CSS) id for element
-        button.setId(number);
+        button.setId(number); // set (CSS) id for element
         button.setPrefWidth(200);
         button.setPrefHeight(200);
         return button;

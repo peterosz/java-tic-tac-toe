@@ -1,4 +1,4 @@
-package sample;
+package java_ttt;
 
 public class Tie {
     private int score;
