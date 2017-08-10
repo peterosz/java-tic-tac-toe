@@ -48,6 +48,7 @@ public class Main extends Application {
                 if (starter == false) {
                     player1Label.setStyle("-fx-background-color: #ff7c7c;");
                     player2Label.setStyle("-fx-background-color: transparent;");
+                    temp_button.setStyle("-fx-text-fill: blue;");
                 } else {
                     player2Label.setStyle("-fx-background-color: #ff7c7c;");
                     player1Label.setStyle("-fx-background-color: transparent;");
@@ -210,7 +211,7 @@ public class Main extends Application {
             playerOName = playerOName.substring(0, 7);
         }
         int playerOScore = playerO.getPlayerScore();
-        
+
         player2Label.setMinSize(100, 24);
         player2Label.setAlignment(Pos.CENTER);
         player2Label.setText(playerOName +" O: " + playerOScore);
