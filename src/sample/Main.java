@@ -50,6 +50,7 @@ public class Main extends Application {
                 } else {
                     player2Label.setStyle("-fx-background-color: #77ff85;");
                     player1Label.setStyle("-fx-background-color: transparent;");
+                    temp_button.setStyle("-fx-text-fill: red;");
                 }
                 String mark = player.get(starter);
                 temp_button.setText(mark);
